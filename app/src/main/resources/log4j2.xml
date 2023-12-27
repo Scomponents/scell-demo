@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="${env:LOG_LEVEL:-DEBUG}">
+    <Appenders>
+        <Console name="LogToConsole" target="SYSTEM_OUT">
+            <PatternLayout pattern="%highlight{%d{HH:mm:ss} | %-5p | [%t] %F:%L - %m%n}{FATAL=red blink, ERROR=red, WARN=yellow, INFO=green, DEBUG=white, TRACE=blue}"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.intechcore" level="${env:LOG_LEVEL:-DEBUG}" additivity="false">
+            <AppenderRef ref="LogToConsole"/>
+        </Logger>
+        <Root level="${env:LOG_LEVEL:-DEBUG}">
+            <AppenderRef ref="LogToConsole"/>
+        </Root>
+    </Loggers>
+</Configuration>

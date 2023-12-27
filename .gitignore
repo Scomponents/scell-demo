@@ -4,9 +4,15 @@
 # Ignore Gradle build output directory
 build
 
-# Ignore lvim's project files
-#.project
-#.settings
-#app/.classpath
-#app/.project
-#app/.settings
+# Ignore Eclipse project files
+.project
+.settings
+app/.classpath
+app/.project
+app/.settings
+
+# Ignore Idea files
+.idea
+
+# Ignore user's gradle.properties possibly with some secret data
+app/gradle.properties
