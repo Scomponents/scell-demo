@@ -4,8 +4,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import org.example.scelldemo.controls.factory.ButtonsFactory;
 import org.example.scelldemo.controls.ScellWrapper;
+import org.example.scelldemo.controls.factory.ButtonsFactory;
 import org.example.scelldemo.controls.factory.ToolbarsFactory;
 
 import java.util.ArrayList;

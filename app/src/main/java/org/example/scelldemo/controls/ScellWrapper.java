@@ -10,6 +10,7 @@ import com.intechcore.scomponents.scell.api.init.ScellApiEntryPoint;
 import com.intechcore.scomponents.scell.api.spreadsheet.IScellCoreApiFactory;
 import com.intechcore.scomponents.scell.api.spreadsheet.model.IWorkbook;
 import com.intechcore.scomponents.scell.api.spreadsheet.model.data.IProductInfo;
+import com.intechcore.scomponents.scell.api.spreadsheet.service.builder.IRangeAddressBuilder;
 import com.intechcore.scomponents.scell.api.spreadsheet.service.search.ISearchIterator;
 import com.intechcore.scomponents.scell.api.spreadsheet.service.search.ISearchParams;
 import com.intechcore.scomponents.scell.api.spreadsheet.service.search.ISearchResultItem;
@@ -28,6 +29,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public final class ScellWrapper {
+    private ISearchIterator[] iteratorClosure = new ISearchIterator[]{null};
     private IUiContentManager uiManager;
     private IUiSelectionManager selectionManager;
     private IProductInfo versionData;
@@ -76,6 +78,7 @@ public final class ScellWrapper {
     }
 
     public CompletableFuture<Void> loadSpreadsheet(File file) {
+        this.resetSearchIterator();
         if (file == null) {
             return CompletableFuture.completedFuture(null);
         }
@@ -83,10 +86,12 @@ public final class ScellWrapper {
     }
 
     public CompletableFuture<Void> loadSpreadsheet(InputStream content, String name) {
+        this.resetSearchIterator();
         return this.uiManager.load(content, name);
     }
 
     public void createNew() {
+        this.resetSearchIterator();
         this.uiManager.clear();
     }
 
@@ -124,9 +129,8 @@ public final class ScellWrapper {
     }
 
     public void addSearchActions(TextField patternInput, Button searchForwardButton, Window parentWindow) {
-        ISearchIterator[] iteratorClosure = new ISearchIterator[]{null};
         patternInput.textProperty().addListener((event, oldValue, newValue) -> {
-            iteratorClosure[0] = null;
+            this.resetSearchIterator();
             if (newValue.isEmpty()) {
                 patternInput.setText("");
             }
@@ -160,6 +164,11 @@ public final class ScellWrapper {
                 this.selectionManager.setSelection(searchResult.getWorksheetId(), searchResult.getAddress());
             }, Platform::runLater);
         });
+    }
+
+
+    private void resetSearchIterator() {
+        this.iteratorClosure[0] = null;
     }
 
     private static void showNotFoundMsg(String pattern, Window parent) {

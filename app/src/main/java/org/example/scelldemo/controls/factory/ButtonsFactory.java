@@ -9,9 +9,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.example.scelldemo.controls.helper.ButtonsManager;
 import org.example.scelldemo.controls.FlatIconicButton;
 import org.example.scelldemo.controls.ScellWrapper;
+import org.example.scelldemo.controls.helper.ButtonsManager;
 import org.example.scelldemo.controls.helper.Utils;
 
 import java.io.IOException;
