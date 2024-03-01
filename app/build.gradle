@@ -1,6 +1,9 @@
 plugins {
     id 'application'
+    // id 'org.openjfx.javafxplugin' version '0.0.13'
+    // id 'org.openjfx.javafxplugin' version '0.0.14'
     id 'org.openjfx.javafxplugin' version '0.1.0'
+    id 'org.javamodularity.moduleplugin' version '1.8.12'
 }
 
 repositories {
@@ -25,6 +28,10 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
+java {
+    modularity.inferModulePath.set(false)
+}
+
 javafx {
     version = "21.0.1"
     modules = [ 'javafx.controls', 'javafx.fxml' ]
@@ -32,12 +39,13 @@ javafx {
 
 application {
     mainClass = 'org.example.scelldemo.App'
+    mainModule = 'org.example.scelldemo'
 }
 
 run {
     args = ["--desktop"]
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
-}
+// tasks.named('test') {
+//     useJUnitPlatform()
+// }

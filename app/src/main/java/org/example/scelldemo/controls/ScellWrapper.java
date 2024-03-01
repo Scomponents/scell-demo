@@ -10,7 +10,6 @@ import com.intechcore.scomponents.scell.api.init.ScellApiEntryPoint;
 import com.intechcore.scomponents.scell.api.spreadsheet.IScellCoreApiFactory;
 import com.intechcore.scomponents.scell.api.spreadsheet.model.IWorkbook;
 import com.intechcore.scomponents.scell.api.spreadsheet.model.data.IProductInfo;
-import com.intechcore.scomponents.scell.api.spreadsheet.service.builder.IRangeAddressBuilder;
 import com.intechcore.scomponents.scell.api.spreadsheet.service.search.ISearchIterator;
 import com.intechcore.scomponents.scell.api.spreadsheet.service.search.ISearchParams;
 import com.intechcore.scomponents.scell.api.spreadsheet.service.search.ISearchResultItem;
