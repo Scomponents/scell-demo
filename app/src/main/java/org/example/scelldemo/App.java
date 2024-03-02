@@ -7,14 +7,19 @@ import javafx.stage.Stage;
 import org.example.scelldemo.controls.ScellWrapper;
 import org.example.scelldemo.controls.factory.ButtonsFactory;
 import org.example.scelldemo.controls.factory.ToolbarsFactory;
+import org.example.scelldemo.controls.helper.FsXlsxWatcher;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
-        boolean addExtraControls = this.getCommandLineParams().contains("--desktop");
+        List<String> cmdArgs = this.getCommandLineParams();
+        boolean addExtraControls = cmdArgs.contains("--desktop");
 
         BorderPane root = new BorderPane();
         root.setVisible(false);
@@ -25,6 +30,8 @@ public class App extends Application {
             root.setCenter(scellControl);
             root.setStyle("-fx-background-color: #28a87d;");
             root.setVisible(true);
+
+            watchForAutoOpen(scell, cmdArgs);
         });
 
         ButtonsFactory buttonsFactory = new ButtonsFactory(scell, primaryStage, App.class.getClassLoader());
@@ -44,5 +51,17 @@ public class App extends Application {
         }
 
         return parameters.getRaw();
+    }
+
+    private void watchForAutoOpen(ScellWrapper scell, List<String> args) {
+        Path watchDirPath = args.stream().filter(arg -> arg.startsWith("path="))
+                .map(s -> Path.of(s.replace("path=", "")))
+                .findFirst().orElse(null);
+
+        if (watchDirPath != null && Files.exists(watchDirPath)) {
+            CompletableFuture.runAsync(() -> FsXlsxWatcher.watchDirectory(watchDirPath, newFile -> {
+                scell.loadSpreadsheet(newFile.toFile());
+            }));
+        }
     }
 }
